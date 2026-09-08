@@ -7,6 +7,7 @@ import cookieParser, {} from "cookie-parser";
 import cartRoutes from "./routes/cartRoutes.js";
 import productsRoutes from "./routes/productsRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import agentRoutes from "./routes/agentRoutes.js";
 import checkAuth from "./middlewares/authMiddleware.js";
 import globalErrorHandler from "./middlewares/globalErrorHandler.js";
 
@@ -23,9 +24,10 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/user", userRoutes);
-app.use("/cart", checkAuth, cartRoutes);
-app.use("/products", checkAuth, productsRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/cart", checkAuth, cartRoutes);
+app.use("/api/products", checkAuth, productsRoutes);
+app.use("/api/agent", checkAuth, agentRoutes);
 
 app.use(globalErrorHandler);
 
