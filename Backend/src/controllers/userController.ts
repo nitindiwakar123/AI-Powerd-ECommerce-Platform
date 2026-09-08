@@ -60,3 +60,13 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
     return res.status(201).json({success: true, message: "user created successfully"});
 }
+
+export const logout = async (req: Request, res: Response) => {
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+    });
+
+    return res.status(200).json({ message: 'Logged out successfully' });
+};
