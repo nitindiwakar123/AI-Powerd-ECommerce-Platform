@@ -1,48 +1,36 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { createAgent, tool } from "langchain";
+import { createAgent } from "langchain";
 import { env } from "../config/env.js";
-import Product from "../model/Product.js";
-import * as z from "zod";
+import { searchProductsTool } from "./tools/searchProductsTool.js";
+import { getProductTool } from "./tools/getProductTool.js";
 
 const apikey = env.geminiApiKey || "";
 
-const llm = new ChatGoogleGenerativeAI({
+const model = new ChatGoogleGenerativeAI({
     model: "gemini-3.5-flash-lite",
     apiKey: apikey,
 });
 
-const getWeather = tool(
-    (city: string) => `It is always sunny in ${city}!`,
-    {
-        name: "get_weather",
-        description: "get the weather details of given city",
-        schema: z.string().describe("The city to get weather for")
-    }
-);
-
-interface Product {
-    title: string,
-    price: number,
-    rating: number,
-    description: string
-}
-
-
-const getProducts = tool(
-    async ({query}: {}): Promise<Product[]> => {
-        const products = await Product.find({query}).select("title price rating category stock description").limit(5).lean();
-
-        return products;
-    },
-    {
-        name: "get_products",
-        description: "get the products ",
-        schema: z.string().describe("The city to get weather for")
-    }
-)
-
 const agent = createAgent({
-    model: "gemini-3.5-flash-lite",
-    tools: [getWeather],
-})
+    model,
+    tools: [searchProductsTool, getProductTool],
+    systemPrompt: `
+You are an AI shopping assistant for an ecommerce store.
 
+Your job is to help users find products.
+
+Rules:
+
+1. Always use search_products when the user asks to find or search products.
+2. Never invent product information.
+3. Only recommend products returned by the tools.
+4. When showing products, mention:
+   - title
+   - price
+   - rating
+5. If the user asks for details about a specific product, use get_product.
+6. Keep responses concise and useful.
+`
+});
+
+export default agent;
