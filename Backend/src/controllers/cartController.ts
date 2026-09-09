@@ -17,7 +17,7 @@ export const updateCart = async (req: Request, res: Response) => {
     const cartId = req.params?.id;
 
     if(error) {
-      return res.status(400).json({success: false, Error: "product id is invalid!"});
+      return res.status(400).json({success: false, error: "product id is invalid!"});
     }
 
     const productId = data;

@@ -1,3 +1,5 @@
+import type { ApiResponse } from "./api";
+
 export interface Product {
     _id: string;
     title: string;
@@ -10,3 +12,8 @@ export interface Product {
     createdAt: string;
     updatedAt: string;
 }
+
+
+export type ProductResponse = ApiResponse<{
+    products: Product[]
+}>

@@ -1,75 +1,46 @@
-# React + TypeScript + Vite
+# Shoply — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A minimal, modern storefront for the AI-Powered eCommerce backend. Built to
+map 1:1 onto what the backend actually supports, and structured to be easy
+to extend (checkout, wishlist, orders, etc.) as those endpoints get added.
 
-Currently, two official plugins are available:
+## Stack
+TypeScript · React 19 · Tailwind CSS v4 · shadcn-style primitives (Radix +
+class-variance-authority, hand-rolled — no CLI lock-in) · TanStack Query ·
+Redux Toolkit · React Router DOM · Axios · lucide-react · sonner (toasts)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Structure
+```
+src/
+  api/            axios calls per backend resource (user, products, cart, agent)
+  app/            redux store + typed hooks
+  features/       redux slices + react-query hooks, one folder per domain
+  components/ui/  shadcn-style primitives (button, input, card, badge…)
+  components/layout/  navbar, footer, app shell, AI assistant widget
+  pages/          route-level screens
+  routes/         react-router config
+```
+Each domain (`auth`, `cart`, `products`, `agent`) is self-contained under
+`features/`, so adding a new resource (e.g. `orders`) means adding one new
+folder rather than touching existing code.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+## Getting started
+```bash
+cd frontend
+cp .env.example .env   # point VITE_API_BASE_URL at your backend
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Features implemented (mapped to backend routes)
+- **Auth** — sign up, sign in, sign out, "who am I" (`/api/user/*`)
+- **Catalog** — product grid with category filter + search, product detail (`GET /api/products`)
+- **Cart** — view + add items (`GET/PATCH /api/cart/:id`)
+- **AI shopping assistant** — floating chat widget (`POST /api/agent/chat`)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+## Known backend gaps this UI works around
+- `Product` has no `image` field → color-coded placeholder thumbnails instead
+- No `GET /api/products/:id` → product detail is derived client-side from the cached product list
+- No cart-creation endpoint → a brand-new user has no cart id to PATCH into until one exists (cart id is persisted in Redux/localStorage once known)
+- No checkout/orders — the checkout button is intentionally disabled
+- Backend CORS needs `credentials: true` added for the cookie-based JWT auth to work cross-origin from this app

@@ -7,7 +7,7 @@ export const chatWithShoppingAgent = async (req: Request, res: Response) => {
     const { data, error } = safeParse(chatWithShoppingAgentSchema, req.body);
 
     if (error) {
-        return res.status(400).json({ success: false, Error: "Invalid input!" });
+        return res.status(400).json({ success: false, error: "Invalid input!" });
     }
 
     const { message } = data;

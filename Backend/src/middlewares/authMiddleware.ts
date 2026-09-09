@@ -31,14 +31,14 @@ async function checkAuth(req: Request, res: Response, next: NextFunction) {
     const { token } = req.cookies;
 
     if (!token) {
-        return res.status(400).json({ success: false, Error: "user is not authenticated" });
+        return res.status(400).json({ success: false, error: "user is not authenticated" });
     }
 
     try {
         const secret = env.jwtSecret || "nitin-diwakar";
         const decoded: unknown = jwt.verify(token, secret);
 
-        if (!isAuthPayload(decoded)) return res.status(400).json({ success: false, Error: "Invalid token" });
+        if (!isAuthPayload(decoded)) return res.status(400).json({ success: false, error: "Invalid token" });
 
         req.user = decoded;
 

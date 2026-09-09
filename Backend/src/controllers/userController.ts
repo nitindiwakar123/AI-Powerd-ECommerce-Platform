@@ -20,15 +20,15 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     const { success, data, error } = safeParse(loginSchema, req.body);
 
     if (error) {
-        return res.status(400).json({ success: false, Error: "Invalid Credentials" });
+        return res.status(400).json({ success: false, error: "Invalid Credentials" });
     }
 
     const { email, password } = data;
 
-    const user = await User.findOne({ email, password }).select("email password").lean();
+    const user = await User.findOne({ email, password }).select("name email").lean();
 
     if (!user) {
-        return res.status(401).json({ success: false, Error: "user not found" });
+        return res.status(401).json({ success: false, error: "user not found" });
     }
 
     const secret = env.jwtSecret || "";
@@ -52,7 +52,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     const { success, data, error } = safeParse(registerSchema, req.body);
 
     if (error) {
-        return res.status(400).json({ success: false, Error: "Invalid Credentials" });
+        return res.status(400).json({ success: false, error: "Invalid Credentials" });
     }
 
     const { name, email, password } = data;
