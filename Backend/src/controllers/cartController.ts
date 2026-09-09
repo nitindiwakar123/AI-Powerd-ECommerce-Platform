@@ -24,5 +24,7 @@ export const updateCart = async (req: Request, res: Response) => {
 
     await Cart.findByIdAndUpdate(cartId, {products: {$push: productId}});
 
-    return res.status(200).json({success: true, message: "cart updated!"});
+    return res.status(200).json({success: true, data: {
+        message: "cart updated!"
+    }});
 }

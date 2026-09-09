@@ -4,7 +4,7 @@ import { env } from "../config/env.js";
 import { searchProductsTool } from "./tools/searchProductsTool.js";
 import { getProductTool } from "./tools/getProductTool.js";
 
-const apikey = env.geminiApiKey || "";
+const apikey = env.geminiApiKey || "skdfjkl";
 
 const model = new ChatGoogleGenerativeAI({
     model: "gemini-3.5-flash-lite",

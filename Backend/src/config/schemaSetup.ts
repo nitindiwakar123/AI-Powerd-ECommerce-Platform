@@ -73,6 +73,9 @@ if (typeof db !== "undefined") {
                         'price',
                         'rating',
                         'description',
+                        'category',
+                        'stock',
+                        'image'
                     ],
 
                     properties: {
@@ -92,9 +95,20 @@ if (typeof db !== "undefined") {
                         },
                         rating: {
                             bsonType: 'number',
-                            min: 1,
-                            max: 5,
                             description: 'product rating'
+                        },
+                        category: {
+                            bsonType: 'string',
+                            description: 'product category'
+                        },
+                        stock: {
+                            bsonType: 'number',
+                            description: 'product stock'
+                        },
+                        image: {
+                            bsonType: 'string',
+                            description: 'product image'
+
                         },
                         createdAt: {
                             bsonType: 'date',

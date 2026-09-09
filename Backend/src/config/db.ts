@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
-import {env} from "./env.js";
+import { env } from "./env.js";
 
 export async function connectDB() {
     const url = env.dbUrl;
-    if(typeof url != "string") {
+
+    if (typeof url != "string") {
         console.log("Database Url is not valid: ", url);
         return;
     }
-    console.log({url});
+    console.log({ url });
+
     try {
         await mongoose.connect(url);
         console.log("Database Connected!");

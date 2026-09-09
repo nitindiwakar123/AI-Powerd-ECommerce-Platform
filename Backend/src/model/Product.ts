@@ -21,6 +21,10 @@ const productSchema = new Schema({
         type: Number,
         required: [true, "stock is a required field!"]
     },
+    image: {
+        type: String,
+        required: [true, "image is a required field!"]
+    },
     description: {
         type: String,
         required: [true, "description is required!"]

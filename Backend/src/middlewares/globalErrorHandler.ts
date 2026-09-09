@@ -6,8 +6,6 @@ export default async function globalErrorHandler(error: unknown, req: Request, r
     // Sending a general response for unexpected errors 
     return res.status(500).json({
         success: false,
-        error: {
-            message: "Internal Server Error!"
-        }
+        Error: "Internal Server Error!"
     });
 }
