@@ -40,7 +40,6 @@ async function checkAuth(req: Request, res: Response, next: NextFunction) {
         const decoded = decodedSchema.safeParse(jwt.verify(token, secret));
 
         const { data, error } = decoded;
-        console.log({data, error});
         if (error) {
             return res.status(400).json({ success: false, error: "user is not authenticated!" });
         }

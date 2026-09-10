@@ -3,6 +3,7 @@ import { createAgent } from "langchain";
 import { env } from "../config/env.js";
 import { searchProductsTool } from "./tools/searchProductsTool.js";
 import { getProductTool } from "./tools/getProductTool.js";
+import {MemorySaver} from "@langchain/langgraph";
 
 const apikey = env.GEMINI_API_KEY;
 
@@ -11,9 +12,12 @@ const model = new ChatGoogleGenerativeAI({
     apiKey: apikey,
 });
 
+const checkpointer = new MemorySaver();
+
 const agent = createAgent({
     model,
     tools: [searchProductsTool, getProductTool],
+    checkpointer,
     systemPrompt: `
 You are an AI shopping assistant for an ecommerce store.
 

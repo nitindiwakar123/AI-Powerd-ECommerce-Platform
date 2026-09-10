@@ -1,7 +1,8 @@
 import api from "./axios";
+import type { AgentResponse } from "../types/agent";
 
 // POST /api/agent/chat  body: { message: string }
 export const chatWithAgentRequest = async (message: string) => {
-  const { data } = await api.post<{ success: boolean; message: string }>("/agent/chat", { message });
-  return data.message;
+  const response = await api.post<AgentResponse>("/agent/chat", { message });
+  return response.data;
 };

@@ -22,12 +22,14 @@ export function AgentWidget() {
     setInput("");
     setMessages((m) => [...m, { role: "user", text }]);
     try {
-      const reply = await chat.mutateAsync(text);
+      const result = await chat.mutateAsync(text);
+      const reply = result.data?.message;
       setMessages((m) => [...m, { role: "assistant", text: String(reply ?? "") }]);
     } catch {
       setMessages((m) => [...m, { role: "assistant", text: "Sorry, something went wrong." }]);
     }
   };
+
 
   return (
     <div className="fixed w-[350px] bottom-0 left-0 h-screen z-50">
