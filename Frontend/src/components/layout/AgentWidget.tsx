@@ -30,9 +30,9 @@ export function AgentWidget() {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-50">
+    <div className="fixed w-[350px] bottom-0 left-0 h-screen z-50">
       {open && (
-        <div className="mb-3 flex h-[26rem] w-80 flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-xl">
+        <div className="mb-3 flex w-full h-full w-80 flex-col overflow-hidden border border-zinc-200 bg-white shadow-xl">
           <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3">
             <div className="flex items-center gap-2 text-sm font-semibold">
               <Sparkles size={16} className="text-accent-500" />
@@ -69,9 +69,9 @@ export function AgentWidget() {
         </div>
       )}
 
-      <Button size="icon" className="h-12 w-12 rounded-full shadow-lg" onClick={() => setOpen((o) => !o)}>
+      {!open && <Button size="icon" className="absolute bottom-5 left-5 h-12 w-12 rounded-full shadow-lg" onClick={() => setOpen((o) => !o)}>
         <MessageCircle size={20} />
-      </Button>
+      </Button>}
     </div>
   );
 }

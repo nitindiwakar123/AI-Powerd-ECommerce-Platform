@@ -1,7 +1,7 @@
 import express from "express"
 import 'dotenv/config'; 
-import { connectDB } from "./config/db.js";
 import { env } from "./config/env.js";
+import { connectDB } from "./config/db.js";
 import cors from "cors";
 import cookieParser, {} from "cookie-parser";
 import cartRoutes from "./routes/cartRoutes.js";
@@ -16,7 +16,7 @@ await connectDB();
 const app = express();
 
 app.use(cors({
-    origin: env.clientUrl,
+    origin: env.CLIENT_URL,
     credentials: true,
 }));
 

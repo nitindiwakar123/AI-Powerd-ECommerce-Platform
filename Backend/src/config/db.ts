@@ -2,12 +2,8 @@ import mongoose from "mongoose";
 import { env } from "./env.js";
 
 export async function connectDB() {
-    const url = env.dbUrl;
-
-    if (typeof url != "string") {
-        console.log("Database Url is not valid: ", url);
-        return;
-    }
+    const url = env.DB_URL;
+    
     console.log({ url });
 
     try {

@@ -31,7 +31,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         return res.status(401).json({ success: false, error: "user not found" });
     }
 
-    const secret = env.jwtSecret || "";
+    const secret = env.JWT_SECRET;
 
     const token = jwt.sign(user, secret);
 
