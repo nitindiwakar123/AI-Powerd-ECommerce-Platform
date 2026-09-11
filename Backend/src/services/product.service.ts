@@ -53,5 +53,5 @@ export const searchProducts = async (
             };
         }
 
-        return Product.find(filter).limit(5).lean();
+        return Product.find(filter).select("title price rating category stock image description").limit(5).lean();
 };

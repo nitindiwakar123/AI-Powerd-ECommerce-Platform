@@ -5,7 +5,7 @@ import Product from "../../model/Product.js";
 
 export const getProductTool = tool(
     async ({ productId }) => {
-        const product = await Product.findById(productId).lean();
+        const product = await Product.findById(productId).select("title price rating category stock image description").lean();
 
         if (!product) {
             return JSON.stringify({
