@@ -5,6 +5,7 @@ import { searchProductsTool } from "./tools/searchProductsTool.js";
 import { getProductTool } from "./tools/getProductTool.js";
 import { addToCartTool } from "./tools/addToCartTool.js";
 import { MemorySaver } from "@langchain/langgraph";
+import { contextSchema } from "../validators/ai/ai.js";
 
 const apikey = env.GEMINI_API_KEY;
 

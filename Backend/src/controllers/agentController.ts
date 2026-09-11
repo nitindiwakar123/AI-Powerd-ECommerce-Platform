@@ -3,6 +3,8 @@ import type { Request, Response } from "express";
 import { chatWithShoppingAgentSchema } from "../validators/ai/ai.js";
 import { safeParse } from "zod";
 
+const thread_id = crypto.randomUUID();
+
 export const chatWithShoppingAgent = async (req: Request, res: Response) => {
     console.log(req.url)
     const { data, error } = safeParse(chatWithShoppingAgentSchema, req.body);
@@ -22,8 +24,10 @@ export const chatWithShoppingAgent = async (req: Request, res: Response) => {
             ]
         },
         {
-            configurable: { thread_id: crypto.randomUUID() },
-            context: req.user
+            configurable: { thread_id },
+            context: {
+                userId: req.user.userId
+            }
         },
     );
 
