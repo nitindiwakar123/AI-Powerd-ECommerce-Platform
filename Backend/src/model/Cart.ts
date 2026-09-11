@@ -3,7 +3,8 @@ import { model, Schema } from "mongoose";
 const cartSchema = new Schema(
     {
         userId: {
-            type: String,
+            type: Schema.Types.ObjectId,
+            unique: true,
             required: [true, "userId is a required field!"]
         },
         products: {

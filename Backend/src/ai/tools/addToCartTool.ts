@@ -13,7 +13,7 @@ export const addToCartTool = tool(
 
         await Cart.updateOne(
             { userId },
-            { products: { $push: productId } },
+            { $push: { products: productId } },
             { upsert: true }).lean();
 
         return JSON.stringify({
