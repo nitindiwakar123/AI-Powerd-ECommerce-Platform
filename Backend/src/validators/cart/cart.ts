@@ -1,3 +1,5 @@
 import * as z from "zod";
 
-export const updateCartSchema = z.string();
+export const updateCartSchema = z.object({
+    productId: z.string(),
+});
